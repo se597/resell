@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>카테고리</title>
+  <!-- 공통 헤더 CSS -->
+  <link rel="stylesheet" th:href="@{/css/header.css}">
+  <!-- 카테고리 전용 CSS -->
+  <link rel="stylesheet" th:href="@{/css/category.css}">
+</head>
+
+<body>
+  <div th:replace="layout/header :: siteHeader"></div>
+
+  <!-- ✅ 대분류 -->
+<div class="page-content">
+  <div class="category-grid" id="category1">
+    <div th:each="c1 : ${cat1List}"
+         th:text="${c1.cat1_name}"
+         th:class="'cat-item ' + (${c1.cat1_id} == ${currentCat1} ? 'active' : '')"
+         th:onclick="|changeCategory1('${c1.cat1_id}', this)|">
+    </div>
+  </div>
+
+  <!-- ✅ 중분류 -->
+  <div class="category-grid" id="category2">
+    <div th:each="c2 : ${cat2}"
+         th:text="${c2.cat2_name}"
+         class="cat-item"
+         th:onclick="|loadCategory3('${c2.cat2_id}', this)|">
+    </div>
+  </div>
+
+  <!-- ✅ 소분류 -->
+  <div class="category-grid" id="category3"></div>
+
+	<!-- 검색 / 글쓰기 -->
+	<div class="menu">
+		<input type="text" id="keyword" placeholder="제품 검색"><button type="button" onclick="search()">검색</button>
+		<button type="button" onclick="location.href='/content/form'">글쓰기</button>
+	</div>
+  <!-- ✅ 게시글 -->
+  <div id="post-list"></div>
+</div>
+  <script th:inline="javascript">
+    const currentCat1 = /*[[${currentCat1}]]*/ 0;
+  </script>
+
+  <script>
+    // ✅ 페이지 로드 시 게시글 자동 로드
+    
+    window.onload = function() {
+		if (currentCat1) {
+			const target = document.querySelector(`#category1 .cat-item[onclick*="'${currentCat1}'"]`);
+			if (target) {
+				changeCategory1(currentCat1, target);
+			} else {
+				changeCategory1(currentCat1);
+			}
+		} else {
+			loadAllPost();
+		}
+	};
+	
+	// 전체 게시글 불러오기
+	function loadAllPost() {
+		fetch(`/api/post/all`)
+			.then(r => r.text())
+			.then(html => {
+				document.getElementById('post-list').innerHTML = html;
+			    document.getElementById('category2').innerHTML = '';
+			    document.getElementById('category3').innerHTML = '';
+			});
+	}
+	
+    // ✅ 대분류 변경
+    function changeCategory1(cat1id, el) {
+      document.querySelectorAll('#category1 .cat-item').forEach(e => e.classList.remove('active'));
+      if (el) el.classList.add('active');
+
+      fetch(`/api/category1/${cat1id}`)
+        .then(r => r.text())
+        .then(html => {
+          document.getElementById('category2').innerHTML = html;
+          document.getElementById('category3').innerHTML = '';
+          document.getElementById('post-list').innerHTML = '';
+        })
+        .then(() => {
+          fetch(`/api/posts/category1/${cat1id}`)
+            .then(r => r.text())
+            .then(html => {
+              document.getElementById('post-list').innerHTML = html;
+            });
+        });
+    }
+
+    // ✅ 중분류 클릭
+    function loadCategory3(cat2id, el) {
+      document.querySelectorAll('#category2 .cat-item').forEach(e => e.classList.remove('active'));
+      el.classList.add('active');
+      Promise.all([
+        fetch(`/api/category3/${cat2id}`).then(r => r.text()),
+        fetch(`/api/posts/category2/${cat2id}`).then(r => r.text())
+      ])
+      .then(([cat3Html, postHtml]) => {
+        document.getElementById('category3').innerHTML = cat3Html;
+        document.getElementById('post-list').innerHTML = postHtml;
+      });
+    }
+
+    // ✅ 소분류 클릭
+    function loadPostsBySub(cat3id, el) {
+      document.querySelectorAll('#category3 .cat-item').forEach(e => e.classList.remove('active'));
+      el.classList.add('active');
+      fetch(`/api/posts/category3/${cat3id}`)
+        .then(r => r.text())
+        .then(html => {
+          document.getElementById('post-list').innerHTML = html;
+        });
+    }
+    
+    // 제품검색
+    function search(){
+    	const key = document.getElementById('keyword').value.trim();
+    	
+    	if (!key) {
+    		alert("검색어를 입력하세요");
+    		return;
+    	}
+    	
+    	const keyword = encodeURIComponent(key);
+    	
+    	document.querySelectorAll('#category1 .cat-item').forEach(e => e.classList.remove('active'));
+    	document.getElementById('category2').innerHTML = '';
+    	document.getElementById('category3').innerHTML = '';
+        fetch(`/api/search/${keyword}`)
+        .then(r => r.text())
+        .then(html => {
+          document.getElementById('post-list').innerHTML = html;
+        });
+    }
+  </script>
+ 
+<script>//페이지 나누기
+	function loadPage(page) {
+		const type = document.getElementById("currentType")?.value;
+		const id = document.getElementById("currentId")?.value;
+
+	    let url = "";
+
+  	    if (type === "cat1") {
+	    	url = `/api/posts/category1/${id}?page=${page}`;
+	    } else if (type === "cat2") {
+		    url = `/api/posts/category2/${id}?page=${page}`;
+	    } else if (type === "cat3") {
+	  	  url = `/api/posts/category3/${id}?page=${page}`;
+	    } else if (type === "search") {
+	        url = `/api/search/${encodeURIComponent(id)}?page=${page}`;
+	    } else {
+	    	url = `/api/post/all?page=${page}`;
+	    }
+
+		fetch(url)
+	    	.then(res => res.text())
+	    	.then(html => {
+	      		document.getElementById("post-list").innerHTML = html;
+	    	});
+	}
+</script>
+  
+</body>
+</html>

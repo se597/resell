@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>신고 목록</title>
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/reportlist.css}">
+</head>
+<body>
+<div th:replace="layout/header :: siteHeader"></div>
+<div class="page-content">
+  <h2>신고 목록</h2>
+
+  <div class="btn-row">
+    <button type="button" onclick="location.href='/'">홈으로</button>
+    <button th:onclick="|location.href='@{/adminlist}'|">관리자 계정 목록</button>
+    <button th:onclick="|location.href='@{/memberlist}'|">회원 목록</button>
+    <button th:onclick="|location.href='@{/report/list}'|">신고글 목록</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>제목</th>
+        <th>신고 사유</th>
+        <th>신고자</th>
+        <th>작성자</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="r : ${item}">
+        <td th:text="${r.id}"></td>
+        <td>
+          <a th:href="@{/detail/{pr_no}(pr_no=${r.pr_no})}" th:text="${r.title}"></a>
+        </td>
+        <td th:text="${r.reson_text}"></td>
+        <td th:text="${r.repoter_text}"></td>
+        <td th:text="${r.writer}"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

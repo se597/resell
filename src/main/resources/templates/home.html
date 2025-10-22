@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>중고로운 평화나라</title>
+  <link rel="stylesheet" th:href="@{/css/header.css}">
+  <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+
+<body>
+  <!-- 공통 헤더 -->
+  <div th:replace="layout/header :: siteHeader"></div>
+
+  <main>
+
+    <!-- 🕊️ Hero 섹션 -->
+    <section class="hero">
+      <h1>중고로운 평화나라</h1>
+      <p>사람과 물건이 다시 만나는 공간</p>
+       <button onclick="location.href='/category'">물건 보러가기</button>
+       <button onclick="location.href='/content/form'">물건 등록하기</button>
+    </section>
+
+    <!-- 🌿 역할 3단 섹션 -->
+    <section class="roles">
+      <div class="role-item">
+        <h3>모아보기</h3>
+        <img src="/upload/모아보기.png">
+        <p>관심 있는 물건을 한눈에 볼 수 있습니다.</p>
+      </div>
+      <div class="role-item">
+        <h3>올리기</h3>
+        <img src="/upload/소개하기.png">
+        <p>당신의 물건을 누군가에게 소개해보세요.</p>
+      </div>
+      <div class="role-item">
+        <h3>이어주기</h3>
+        <img src="/upload/연결하기.png">
+        <p>필요한 사람에게 물건이 닿을 수 있도록 돕습니다.</p>
+      </div>
+    </section>
+
+    <!-- ☁️ 짧은 문장 섹션 -->
+    <section class="philosophy">
+      <p>우리는 단지, 사람과 물건이 다시 이어지도록 돕습니다.</p>
+    </section>
+
+    <!-- 🩵 CTA 섹션 -->
+    <section class="cta">
+      <h2>평화로운 거래를 시작해보세요</h2>
+      <button onclick="location.href='/category'">물건 보러가기</button>
+      <button onclick="location.href='/content/form'">물건 등록하기</button>
+    </section>
+
+  </main>
+
+  <!-- 푸터 -->
+  <footer>
+    <p>© 2025 중고로운 평화나라 — 사람과 물건이 이어지는 곳</p>
+  </footer>
+
+</body>
+</html>

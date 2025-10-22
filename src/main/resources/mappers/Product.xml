@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.pr3.dao.ProductDAO">
+	<select id="categories1">
+		select * from category1
+	</select>
+	
+	<select id="categories2">
+		select * from category2
+		where cat1_id = #{id}
+	</select>
+	
+	<select id="categories3">
+		select * from category3
+		where cat2_id = #{id}
+	</select>
+	
+	<select id="product_all">
+		select * from pr3
+	</select>
+	
+	<select id="product_cat1_paged">
+    SELECT *
+    FROM pr3
+    WHERE cat1_id = #{cat1id}
+    ORDER BY pr_no DESC
+    OFFSET #{offset} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+  </select>
+
+  <!-- 🔹 중분류 페이징 -->
+  <select id="product_cat2_paged">
+    SELECT *
+    FROM pr3
+    WHERE cat2_id = #{cat2id}
+    ORDER BY pr_no DESC
+    OFFSET #{offset} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+  </select>
+
+  <!-- 🔹 소분류 페이징 -->
+  <select id="product_cat3_paged">
+    SELECT *
+    FROM pr3
+    WHERE cat3_id = #{cat3id}
+    ORDER BY pr_no DESC
+    OFFSET #{offset} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+  </select>
+  
+  <select id="product_all_paged">
+  	SELECT * FROM pr3
+  	ORDER BY pr_no DESC
+  	OFFSET #{offset} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+  </select>
+  
+	<select id="search_paged">
+		SELECT *
+		FROM pr3
+		WHERE title LIKE #{keyword} OR content LIKE #{keyword}
+  		ORDER BY pr_no DESC
+  		OFFSET #{offset} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+	</select>
+  
+	
+	<select id="product_cat1">
+		select * from pr3
+		where cat1_id = #{id}
+	</select>
+	
+	<select id="product_cat2">
+		select * from pr3
+		where cat2_id = #{id}
+	</select>
+	
+	<select id="product_cat3">
+		select * from pr3
+		where cat3_id = #{id}
+	</select>
+	
+	<select id="detail">
+		select * from pr3
+		where pr_no = #{id}
+	</select>
+	
+	<select id="api_detail">
+		SELECT 
+    		p.pr_no, p.product_name, p.price, p.title, p.writer,
+    		p.upload_at, p.content, p.state, p.cat1_id, p.cat2_id,
+    		p.cat3_id, c1.cat1_name, c2.cat2_name, c3.cat3_name,
+    		p.viewcount, p.postcount, p.file1, p.file2, p.file3
+			FROM pr3 p
+			LEFT JOIN category1 c1 ON p.cat1_id = c1.cat1_id
+			LEFT JOIN category2 c2 ON p.cat2_id = c2.cat2_id
+			LEFT JOIN category3 c3 ON p.cat3_id = c3.cat3_id
+WHERE p.pr_no = #{id}
+		
+	</select>
+	
+	<select id="list">
+		select * from pr3
+	</select>
+	
+	<select id="api_list">
+		SELECT 
+    		p.pr_no, p.product_name, p.price, p.title, p.writer,
+    		p.upload_at, p.content, p.state, p.cat1_id, p.cat2_id,
+    		p.cat3_id, c1.cat1_name, c2.cat2_name,c3.cat3_name
+  		FROM pr3 p
+  		LEFT JOIN category1 c1 ON p.cat1_id = c1.cat1_id
+  		LEFT JOIN category2 c2 ON p.cat2_id = c2.cat2_id
+  		LEFT JOIN category3 c3 ON p.cat3_id = c3.cat3_id
+  		ORDER BY p.pr_no DESC
+	</select>
+	
+	<update id="viewcount">
+		update pr3
+		set viewcount = viewcount + 1
+		where pr_no = #{id}
+	</update>
+	
+	<update id="postcount">
+		update pr3
+		set postcount = postcount + 1
+		where pr_no = #{id}
+	</update>
+	
+	<select id="search">
+		select * from pr3
+		where product_name like #{key} or title like #{key}
+	</select>
+
+</mapper>

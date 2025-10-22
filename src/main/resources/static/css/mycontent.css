@@ -1,0 +1,55 @@
+/* ✅ 버튼 영역 */
+.btn-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* ✅ 버튼 스타일 */
+.btn-row button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #7b61ff;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-row button:hover {
+  background-color: #5a42d1;
+  transform: translateY(-2px);
+}
+
+.btn-row button:active {
+  transform: translateY(0);
+}
+
+/* ✅ 테이블 hover 유지 */
+.page-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+.page-content th,
+.page-content td {
+  border: 1px solid #ccc;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.page-content th {
+  background-color: #f8f8f8;
+  font-weight: 600;
+  color: #444;
+}
+
+.page-content tr:hover {
+  background-color: #fafafa;
+  cursor: pointer;
+}

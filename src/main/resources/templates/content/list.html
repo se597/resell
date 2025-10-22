@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Content List</title>
+</head>
+<body>
+<h1>Content List</h1>
+
+ <div style="margin-bottom: 15px;">
+ 	<a th:if="${session.login == null}" href="/loginpage">로그인</a>
+	<span th:if="${session.login != null}">
+		<button onclick="location.href='/content/form'">상품 등록하기</button>
+		[[${session.login.id}]]님이 로그인중.
+		<a href="/logout">로그아웃</a>
+	</span>
+</div>
+
+<table border="1">
+    <tr>
+        <th>No</th>
+        <th>Title</th>
+        <th>Writer</th>
+        <th>Cat1</th>
+        <th>Cat2</th>
+        <th>Cat3</th>
+    </tr>
+    <tr th:each="content : ${contentList}">
+        <td th:text="${content.cont_no}"></td>
+        <td th:text="${content.title}"></td>
+        <td th:text="${content.writer}"></td>
+        <td th:text="${content.cat1_name}"></td>
+        <td th:text="${content.cat2_name}"></td>
+        <td th:text="${content.cat3_name}"></td>
+        <td>
+        <form th:action="@{/content/delete}" method="post" style="display:inline;">
+        	<input type="hidden" th:name="cont_no" th:value="${content.cont_no}" />
+        	<button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
+        </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

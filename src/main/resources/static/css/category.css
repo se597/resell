@@ -1,0 +1,173 @@
+body {
+  font-family: "Pretendard", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+}
+
+/* 본문 전체 컨테이너 */
+.page-content {
+  max-width: 1100px;      /* ✅ 중앙 고정 폭 */
+  margin: 0 auto;         /* ✅ 가운데 정렬 */
+  padding: 30px 40px;     /* ✅ 위아래·좌우 여백 */
+  box-sizing: border-box;
+}
+
+/* 카테고리 버튼 그리드 */
+.category-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;              /* ✅ 버튼 간 간격 */
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 0px;
+  margin-bottom: 15px;
+}
+
+/* 버튼 스타일 */
+.cat-item {
+  padding: 8px 18px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f8f8f8;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.cat-item:hover {
+  background: #e8e8ff;
+  border-color: #7b61ff;
+}
+
+.cat-item.active {
+  background: #7b61ff;
+  color: #fff;
+  border-color: #7b61ff;
+}
+
+/* 게시글 테이블 */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 15px;
+  font-size: 15px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: 600;
+}
+
+tr:hover {
+  background-color: #fafafa;
+  cursor: pointer;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .page-content {
+    padding: 20px;
+  }
+  .cat-item {
+    flex: 1 1 45%;
+    text-align: center;
+  }
+}
+.cat-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+/* ✅ 메뉴 영역 (검색 + 글쓰기) */
+.menu {
+  display: flex;
+  justify-content: flex-end;  /* 🔹 오른쪽 정렬 */
+  align-items: center;
+  gap: 8px;                   /* 🔹 요소 간 간격 */
+  margin-bottom: 15px;
+}
+
+/* ✅ 검색 입력창 */
+.menu input[type="text"] {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 180px;               /* 🔹 너무 길지 않게 */
+  transition: 0.2s;
+}
+
+.menu input[type="text"]:focus {
+  outline: none;
+  border-color: #7b61ff;
+  box-shadow: 0 0 4px rgba(123, 97, 255, 0.3);
+}
+
+/* ✅ 버튼 공통 스타일 */
+.menu button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #7b61ff;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.menu button:hover {
+  background-color: #5a42d1;
+}
+
+/* ✅ 글쓰기 버튼은 살짝 보조색 */
+.menu button:last-child {
+  background-color: #9a80ff;
+}
+
+.menu button:last-child:hover {
+  background-color: #7b61ff;
+}
+
+/* ✅ 모바일 반응형 */
+@media (max-width: 768px) {
+  .menu {
+    justify-content: center;  /* 모바일에서는 가운데 정렬 */
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .menu input[type="text"] {
+    width: 100%;
+  }
+}
+
+.pagination button {
+  margin: 0 3px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #f9f9f9;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.pagination button:hover {
+  background: #eaeaea;
+}
+
+.pagination button.active {
+  background: #7b61ff;
+  color: #fff;
+  border-color: #7b61ff;
+}

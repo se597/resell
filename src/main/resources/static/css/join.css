@@ -1,0 +1,121 @@
+/* ✅ 기본 설정 */
+body {
+  font-family: "Pretendard", sans-serif;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* ✅ 페이지 공통 컨테이너 */
+.page-content {
+  max-width: 800px;
+  margin: 100px auto 60px;
+  padding: 30px 40px;
+  box-sizing: border-box;
+}
+
+/* ✅ 제목 */
+.page-content h2 {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 8px;
+  color: #333;
+}
+
+/* ✅ 테이블 폼 구조 */
+.page-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.page-content td {
+  padding: 10px 12px;
+  vertical-align: middle;
+}
+
+.page-content td:first-child {
+  width: 140px;
+  font-weight: 600;
+  color: #444;
+}
+
+/* ✅ 입력창 */
+.page-content input[type="text"],
+.page-content input[type="password"],
+.page-content input[type="email"] {
+  width: 95%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.page-content input:focus {
+  outline: none;
+  border-color: #7b61ff;
+  box-shadow: 0 0 4px rgba(123, 97, 255, 0.3);
+}
+
+/* ✅ 버튼 공통 스타일 */
+.page-content button,
+.page-content input[type="submit"] {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #7b61ff;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.page-content button:hover,
+.page-content input[type="submit"]:hover {
+  background-color: #5a42d1;
+  transform: translateY(-2px);
+}
+
+/* ✅ 중복체크 버튼은 보조색 */
+.page-content button[type="button"] {
+  background-color: #9a80ff;
+}
+.page-content button[type="button"]:hover {
+  background-color: #7b61ff;
+}
+
+/* ✅ 하단 버튼 행 */
+.page-content .btn-row {
+  text-align: center;
+  margin-top: 20px;
+}
+.page-content .btn-row input[type="submit"],
+.page-content .btn-row button {
+  min-width: 120px;
+  margin: 0 5px;
+}
+
+/* ✅ 반응형 */
+@media (max-width: 768px) {
+  .page-content {
+    padding: 20px;
+  }
+  .page-content td:first-child {
+    width: 100px;
+    font-size: 14px;
+  }
+  .page-content input {
+    font-size: 13px;
+  }
+  .page-content button,
+  .page-content input[type="submit"] {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

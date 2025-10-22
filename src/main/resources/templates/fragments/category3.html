@@ -1,0 +1,7 @@
+<div th:fragment="category3Fragment" class="category-grid">
+  <div th:each="c3 : ${cat3List}"
+       th:text="${c3.cat3_name}"
+       class="cat-item"
+       th:onclick="|loadPostsBySub('${c3.cat3_id}', this)|">
+  </div>
+</div>

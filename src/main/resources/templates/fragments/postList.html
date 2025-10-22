@@ -1,0 +1,65 @@
+<div th:fragment="postListFragment">
+<!-- 현재 카테고리 타입 기억 -->
+<input type="hidden" id="currentType" th:value="${contextType}"> <!-- cat1/2/3/search -->
+<input type="hidden" id="currentId" th:value="${contextId}">     <!-- 1,2,3,4...keyword -->
+  <!-- 게시글 목록 테이블 -->
+  <table>
+    <thead>
+      <tr>
+        <th>제목</th>
+        <th>가격</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회수</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="p : ${list}"
+          th:onclick="|location.href='@{/detail/{id}(id=${p.pr_no})}'|"
+          style="cursor:pointer;">
+        <td th:text="${p.title}"></td>
+        <td th:text="${#numbers.formatInteger(p.price, 0, 'COMMA')} + '원'"></td>
+        <td th:text="${p.writer}"></td>
+        <td th:text="${#dates.format(p.upload_at, 'yy-MM-dd HH:mm')}"></td>
+        <td th:text="${p.viewcount}"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 페이지네이션 영역 -->
+  <div class="pagination" th:if="${totalPages > 1}" style="text-align:center; margin-top:20px;">
+
+  <!-- << 이전 묶음 -->
+  <button th:if="${currentPage > 5}"
+          th:onclick="'loadPage(' + (${currentPage} - 5) + ');'">&lt;&lt;</button>
+
+  <!-- < 이전 페이지 -->
+  <button th:if="${currentPage > 1}"
+          th:onclick="'loadPage(' + (${currentPage} - 1) + ');'">&lt;</button>
+
+  <!-- 5개 단위 계산 -->
+  <th:block th:with="
+        cp=${currentPage != null ? currentPage : 1},
+        tp=${totalPages != null ? totalPages : 1},
+        start=${( (cp - 1) / 5 ) * 5 + 1},
+        end=${(start + 4) > tp ? tp : (start + 4)}">
+
+    <span th:each="i : ${#numbers.sequence(start.intValue(), end.intValue())}">
+      <button th:text="${i}"
+              th:classappend="${i == cp} ? 'active'"
+              th:onclick="'loadPage(' + ${i} + ');'"></button>
+    </span>
+  </th:block>
+
+  <!-- > 다음 페이지 -->
+  <button th:if="${currentPage < totalPages}"
+          th:onclick="'loadPage(' + (${currentPage} + 1) + ');'">&gt;</button>
+
+  <!-- >> 다음 묶음 -->
+  <button th:if="${currentPage + 5 <= totalPages}"
+          th:onclick="'loadPage(' + (${currentPage} + 5) + ');'">&gt;&gt;</button>
+
+</div>
+
+
+</div>

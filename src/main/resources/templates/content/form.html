@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 등록</title>
+    <!-- 공통 헤더 CSS -->
+	<link rel="stylesheet" th:href="@{/css/header.css}">
+	<!-- 등록폼 CSS -->
+    <link rel="stylesheet" th:href="@{/css/form.css}">
+    
+</head>
+<body>
+<div th:replace="layout/header :: siteHeader"></div>
+<div class="page-content">
+    <h2>상품 등록</h2>
+
+    <form th:action="@{/content/add}" method="post" enctype="multipart/form-data">
+        
+        <div class="form-line">
+            <label>상품명</label>
+            <input type="text" name="product_name" placeholder="상품명을 입력하세요" required>
+        </div>
+
+        <div class="form-line">
+            <label>가격</label>
+            <input type="number" name="price" placeholder="가격을 입력하세요" required>
+        </div>
+
+        <div class="form-line">
+            <label>제목</label>
+            <input type="text" name="title" placeholder="제목을 입력하세요" required>
+        </div>
+
+        <div class="form-line">
+            <label>작성자</label>
+            <input type="text" name="writer" th:value="${session.login?.nickname}" readonly>
+        </div>
+
+        <div class="form-line">
+            <label>내용</label>
+            <textarea name="content" rows="6" placeholder="상품 설명을 입력하세요"></textarea>
+        </div>
+
+        <div class="form-line">
+            <label>파일 1</label>
+            <input type="file" name="upload1">
+        </div>
+
+        <div class="form-line">
+            <label>파일 2</label>
+            <input type="file" name="upload2">
+        </div>
+
+        <div class="form-line">
+            <label>파일 3</label>
+            <input type="file" name="upload3">
+        </div>
+
+        <div class="form-line">
+            <label>카테고리 1</label>
+            <select id="cat1" name="cat1_id" onchange="cat2_activate()" required>
+                <option value="">-- 선택 --</option>
+                <option th:each="cat : ${cat1List}" 
+                        th:value="${cat.cat1_id}" 
+                        th:text="${cat.cat1_name}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-line">
+            <label>카테고리 2</label>
+            <select id="cat2" name="cat2_id" onchange="cat3_activate()" disabled>
+                <option value="">-- 선택 --</option>
+            </select>
+        </div>
+
+        <div class="form-line">
+            <label>카테고리 3</label>
+            <select id="cat3" name="cat3_id" disabled>
+                <option value="">-- 선택 --</option>
+            </select>
+        </div>
+
+        <div class="btn-row">
+            <button type="submit" class="btn login-btn">등록하기</button>
+            <button type="button" class="btn join-btn" onclick="location.href='/category'">목록으로</button>
+        </div>
+    </form>
+</div>
+<script>
+function cat2_activate(){
+	const data = new URLSearchParams();
+    data.append('cat1', document.getElementById('cat1').value);
+	fetch('/content/api/category2', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+		body: data
+	})
+	.then(res => res.json())
+	.then(list => {
+		const select = document.getElementById('cat2');
+		const select2 = document.getElementById('cat3');
+	    select.disabled = false;
+	    select.innerHTML = '';
+	    select2.disabled = true;
+	    select2.innerHTML = '';
+	    const defaultoption1 = document.createElement('option');
+	    const defaultoption2 = document.createElement('option');
+	    defaultoption1.value = '';
+	    defaultoption2.value = '';
+	    defaultoption1.textContent = '-- 선택 --';
+	    defaultoption2.textContent = '-- 선택 --';
+	    select.appendChild(defaultoption1);
+	    select2.appendChild(defaultoption2);
+	    list.forEach(cat => {
+	    	const opt = document.createElement('option');
+			opt.value = cat.cat2_id;
+			opt.textContent = cat.cat2_name;
+			select.appendChild(opt);
+		});
+	})
+	.catch(err => console.error('카테고리 로드 실패', err));
+}
+	
+	function cat3_activate(){
+		console.log("didi")
+		const data = new URLSearchParams();
+	    data.append('cat2', document.getElementById('cat2').value);
+		fetch('/content/api/category3', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			body: data
+		})
+		.then(res => res.json())
+		.then(list => {
+			const select = document.getElementById('cat3');
+		    select.disabled = false;
+		    select.innerHTML = '';
+		    const defaultoption = document.createElement('option');
+		    defaultoption.value = '';
+		    defaultoption.textContent = '-- 선택 --';
+		    select.appendChild(defaultoption);
+		    list.forEach(cat => {
+		    	const opt = document.createElement('option');
+				opt.value = cat.cat3_id;
+				opt.textContent = cat.cat3_name;
+				select.appendChild(opt);
+			});
+		})
+		.catch(err => console.error('카테고리 로드 실패', err));
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+body {
+  font-family: "Pretendard", sans-serif;
+  background-color: #fafafa;
+  margin: 0;
+  padding: 0;
+}
+
+/* ✅ 헤더는 고정된 기본 배치 그대로 */
+
+/* ✅ 로그인 영역만 중앙 정렬 */
+.login-container {
+  min-height: calc(100vh - 120px); /* 헤더 높이만큼 여백 확보 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ✅ 로그인 제목 */
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 24px;
+  color: #333;
+}
+
+/* ✅ 폼 스타일 */
+form {
+  background: #fff;
+  padding: 40px 50px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 300px;
+}
+
+/* ✅ 입력창 */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+/* ✅ 버튼 행 */
+.btn-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 4%;
+}
+
+/* ✅ 버튼 */
+.btn-row {
+  display: flex;
+  justify-content: center; /* 🔸 가운데 정렬 */
+  align-items: center;
+  gap: 10px;               /* 🔸 버튼 간격 */
+  margin-top: 10px;
+}
+
+.btn {
+  min-width: 120px;        /* 🔸 최소 폭 동일하게 */
+  height: 40px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  font-family: inherit;
+  transition: 0.2s;
+}
+
+/* 🔹 색상 구분 */
+.login-btn {
+  background: #7b61ff;
+}
+
+.join-btn {
+  background: #7b61ff;
+}
+
+/* 🔹 hover 시 톤 다운 */
+.btn:hover {
+  filter: brightness(0.9);
+}
+
+
+/* ✅ 에러 메시지 */
+div[th\\:if] {
+  margin-top: 15px;
+  color: red;
+  text-align: center;
+}

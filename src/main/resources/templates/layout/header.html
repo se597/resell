@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Header</title>
+	
+</head>
+<body>
+  <header th:fragment="siteHeader">
+    <nav class="navbar">
+      <div class="nav-left">
+        <a href="/">홈</a>
+      </div>
+
+      <div class="nav-center">
+        <a th:each="item : ${cat1List}"
+           th:href="@{/category1/{cat1id}(cat1id=${item.cat1_id})}"
+           th:text="${item.cat1_name}"></a>
+      </div>
+
+      <div class="nav-right">
+        <a th:if="${session.login == null}" href="/loginpage">로그인</a>
+        <a th:if="${session.login != null}" href="/logout">로그아웃</a>
+        <a th:if="${session.login != null}" th:href="@{/mypage/{id}(id=${session.login.user_no})}">마이페이지</a>
+      </div>
+    </nav>
+  </header>
+</body>
+</html>

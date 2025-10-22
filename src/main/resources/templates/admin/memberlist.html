@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원 목록</title>
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/memberlist.css}">
+</head>
+<body>
+<div th:replace="layout/header :: siteHeader"></div>
+<div class="page-content">
+  <h2>회원 목록</h2>
+
+  <div class="btn-row">
+    <button type="button" onclick="location.href='/'">홈으로</button>
+    <button th:onclick="|location.href='@{/adminlist}'|">관리자 계정 목록</button>
+    <button th:onclick="|location.href='@{/memberlist}'|">회원 목록</button>
+    <button th:onclick="|location.href='@{/report/list}'|">신고글 목록</button>
+  </div>
+
+  <table>
+    <tr>
+      <th>번호</th>
+      <th>아이디</th>
+      <th>이름</th>
+      <th>닉네임</th>
+      <th>이메일</th>
+      <th>랭크</th>
+      <th>삭제</th>
+    </tr>
+    <tr th:each="admin : ${adminList}">
+      <td th:text="${admin.user_no}"></td>
+      <td th:text="${admin.id}"></td>
+      <td th:text="${admin.name}"></td>
+      <td th:text="${admin.nickname}"></td>
+      <td th:text="${admin.email}"></td>
+      <td>
+        <form th:action="@{/rankupdate}" method="post">
+          <input type="hidden" name="user_no" th:value="${admin.user_no}" />
+          <select name="rank">
+            <option th:value="user" th:selected="${admin.rank == 'user'}">user</option>
+            <option th:value="admin" th:selected="${admin.rank == 'admin'}">admin</option>
+          </select>
+          <button type="submit">수정</button>
+        </form>
+      </td>
+      <td>
+        <form th:action="@{/memberdelete}" method="post" style="display:inline;">
+          <input type="hidden" name="user_no" th:value="${admin.user_no}" />
+          <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
+        </form>
+      </td>
+    </tr>
+  </table>
+</div>
+
+</body>
+</html>

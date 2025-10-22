@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>상품 상세</title>
+<link rel="stylesheet" th:href="@{/css/header.css}">
+<link rel="stylesheet" th:href="@{/css/post.css}">
+</head>
+<body>
+<div th:replace="layout/header :: siteHeader"></div>
+
+<div class="detail-container">
+  
+  <div class="detail-header">
+    <h2 class="detail-title">
+      <span th:text="${item.title}"></span>
+      <span th:switch="${item.state}" class="detail-status">
+        <span th:case="0">[판매중]</span>
+        <span th:case="1">[예약중]</span>
+        <span th:case="2">[판매완료]</span>
+      </span>
+    </h2>
+  </div>
+
+  <div class="detail-meta">
+    <div class="meta-left" th:text="'품명: ' + ${item.product_name} + ' / 조회수: ' + ${item.viewcount}"></div>
+    <div class="meta-right" th:text="${item.writer} + ' / ' + ${#dates.format(item.upload_at, 'yy-MM-dd HH:mm')}"></div>
+    <div class="meta-right">
+    	<button type="button" onclick="openReport()">신고하기</button>
+    </div>
+    <div th:if="${session.login != null and item.writer == session.login.id}">
+    	<button onclick="openStateDialog()">상태변경</button>
+    	<button type="button" th:onclick="|location.href='/content/edit/${item.pr_no}'|">수정</button>
+    	<button onclick="dodelete()">삭제</button>
+	</div>
+  </div>
+
+  <div class="slider-container">
+    <div class="slider-wrapper">
+      <img th:each="file : ${fileList}" th:src="@{/upload/{f}(f=${file})}" alt="상품 이미지">
+    </div>
+    <button class="slider-btn prev" onclick="moveSlide(-1)">‹</button>
+    <button class="slider-btn next" onclick="moveSlide(1)">›</button>
+  </div>
+  
+  <div th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')} + '원'" class="price-text"></div>
+  <div class="detail-content" th:text="${item.content}"></div>
+  
+</div>
+
+
+<dialog id="stateDialog">
+  <h3 th:if="${item.state != 2}">판매 상태를 선택하세요.</h3>
+  <h3 th:if="${item.state == 2}">판매 완료 되었습니다.</h3>
+
+  <!-- 상태 버튼 영역 -->
+  <div class="state-container">
+    <!-- 판매중(0)일 때 → 예약중/판매완료 -->
+    <div th:if="${item.state == 0}">
+      <button class="state-btn reserved" onclick="selectState('1')">예약중</button>
+      <button class="state-btn soldout" onclick="selectState('2')">판매완료</button>
+      <button class="state-btn cancel" onclick="closeDialog()">취소</button>
+    </div>
+
+    <!-- 예약중(1)일 때 → 판매중/판매완료 -->
+    <div th:if="${item.state == 1}">
+      <button class="state-btn reserved" onclick="selectState('0')">판매중</button>
+      <button class="state-btn soldout" onclick="selectState('2')">판매완료</button>
+      <button class="state-btn cancel" onclick="closeDialog()">취소</button>
+    </div>
+
+  <!-- 취소 버튼 (항상 중앙) -->
+  <div th:if="${item.state == 2}" class="state-group">
+    <button class="state-btn cancel" onclick="closeDialog()">취소</button>
+  </div>
+</dialog>
+
+<dialog id="report">
+	<h3>게시물 신고</h3>
+	
+	<form id="reportForm">
+		<input type="hidden" name="repoter"
+			th:if="${session.login != null}"
+			th:value="${session.login.user_no}">
+		<input type="hidden" name="pr_no" th:value="${item.pr_no}">
+		<label>
+			<input type="radio" name="reson" value="1">
+			광고성 컨텐츠
+		</label>
+		<label>
+			<input type="radio" name="reson" value="2">
+			상품 정보 부정확
+		</label>
+		<label>
+			<input type="radio" name="reson" value="3">
+			거래 금지 품목
+		</label>
+		<label>
+			<input type="radio" name="reson" value="4">
+			사기의심
+		</label>
+		<label>
+			<input type="radio" name="reson" value="5">
+			컨텐츠내용 불쾌
+		</label>
+		
+		<div class="btn-row">
+			<button type="button" class="report-btn" onclick="doreport()">신고하기</button>
+			<button type="button" class="close-btn" onclick="closeReport()">닫기</button>
+		</div>
+	</form>
+</dialog>
+
+<script th:inline="javascript">
+  let currentIndex = 0;
+  function moveSlide(direction) {
+    const wrapper = document.querySelector('.slider-wrapper');
+    const slides = document.querySelectorAll('.slider-wrapper img');
+    const total = slides.length;
+    currentIndex += direction;
+    if (currentIndex < 0) currentIndex = total - 1;
+    if (currentIndex >= total) currentIndex = 0;
+    wrapper.style.transform = `translateX(-${currentIndex * 600}px)`;
+  }
+
+  //삭제 함수
+  function dodelete(){
+    if (confirm('정말 삭제 하시겠습니까?')){
+      const pr_no = /*[[${item.pr_no}]]*/;
+      fetch('/content/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'cont_no=' + encodeURIComponent(pr_no)
+      })
+      .then(res => res.text())
+      .then(result => {
+        if (result === 'success') {
+          alert('삭제되었습니다!');
+          location.href = '/category';
+        }
+      });
+    }
+  }
+
+  //모달 열기
+  function openStateDialog() {
+    document.getElementById('stateDialog').showModal();
+  }
+  function openReport(){
+	  const isLogin = /*[[${session.login == null}]]*/;
+	  if(isLogin){
+		  alert('게시물 신고는 로그인 후 이용가능합니다.');
+		  return;
+	  }
+	  document.getElementById('report').showModal();
+  }
+
+  //모달 닫기
+  function closeDialog() {
+    document.getElementById('stateDialog').close();
+  }
+  function closeReport(){
+	  document.getElementById('report').close();
+  }
+
+  //상태 선택 처리
+  function selectState(stateValue) {
+    const pr_no = /*[[${item.pr_no}]]*/;
+    const data = new URLSearchParams();
+    data.append('cont_no', pr_no);
+    data.append('state', stateValue);
+    fetch('/content/updatestate', {
+    	  method: 'POST',
+    	  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    	  body: data
+    	})
+    	.then(res => res.text())
+    	.then(result => {
+    		if(result === 'success') {
+    			closeDialog();
+    			location.reload();
+    		}
+    	});
+  }
+//신고버튼 작동
+function doreport(){
+	const form = document.getElementById('reportForm');
+	const formData = new FormData(form);
+	
+	fetch('/content/report', {
+		method: 'POST',
+		body: formData
+	})
+	.then(res => res.text())
+	.then(result => {
+		if(result === 'success'){
+			closeReport();
+			alert('신고가 완료되었습니다.');
+		}
+	})
+	.catch(err => console.error(err));
+}
+</script>
+
+</body>
+</html>

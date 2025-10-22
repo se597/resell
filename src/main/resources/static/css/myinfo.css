@@ -1,0 +1,130 @@
+/* ✅ 기본 설정 */
+body {
+  font-family: "Pretendard", sans-serif;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* ✅ 공통 컨테이너 */
+.page-content {
+  max-width: 800px;
+  margin: 100px auto 60px;
+  padding: 30px 40px;
+  box-sizing: border-box;
+}
+
+/* ✅ 제목 */
+.page-content h2 {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 8px;
+  color: #333;
+}
+
+/* ✅ 테이블 */
+.page-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 25px;
+  font-size: 15px;
+}
+
+.page-content th,
+.page-content td {
+  border: 1px solid #ccc;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.page-content th {
+  background-color: #f8f8f8;
+  width: 150px;
+  font-weight: 600;
+  color: #444;
+}
+
+.page-content td input[type="text"] {
+  width: 98%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* ✅ 포커스 시 */
+.page-content td input:focus {
+  outline: none;
+  border-color: #7b61ff;
+  box-shadow: 0 0 4px rgba(123, 97, 255, 0.3);
+}
+
+/* ✅ 읽기 전용 */
+.page-content td input[readonly] {
+  background-color: #f9f9f9;
+  color: #666;
+}
+
+/* ✅ 버튼 영역 */
+.page-content button {
+  min-width: 120px;
+  height: 40px;
+  margin: 8px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  font-family: inherit;
+  transition: 0.2s;
+}
+
+/* ✅ 수정완료 / 취소 버튼 색상 */
+.page-content button[type="submit"] {
+  background-color: #7b61ff;
+}
+.page-content button[type="submit"]:hover {
+  background-color: #5a42d1;
+}
+
+.page-content button[type="button"] {
+  background-color: #9a80ff;
+}
+.page-content button[type="button"]:hover {
+  background-color: #7b61ff;
+}
+
+/* ✅ 버튼 정렬 */
+.page-content form {
+  text-align: center;
+}
+
+/* ✅ 반응형 */
+@media (max-width: 768px) {
+  .page-content {
+    padding: 20px;
+  }
+
+  .page-content table {
+    font-size: 14px;
+  }
+
+  .page-content th {
+    width: 100px;
+  }
+
+  .page-content td input {
+    font-size: 13px;
+  }
+
+  .page-content button {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

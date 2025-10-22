@@ -1,0 +1,107 @@
+body {
+  font-family: "Pretendard", "Noto Sans KR", sans-serif;
+  margin: 0;
+  background-color: #fafafa;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 100px 20px 60px;
+  background: linear-gradient(135deg, #fefefe, #eefaf4);
+}
+.hero h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+.hero p {
+  font-size: 18px;
+  color: #555;
+}
+
+.hero button {
+  background: #a8d5ba;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background 0.2s;
+}
+.hero button:hover {
+  background: #95c6a8;
+}
+
+/* Roles */
+.roles {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 60px 20px;
+  background: #fff;
+}
+.role-item {
+  text-align: center;
+  max-width: 220px;
+}
+.role-item h3 {
+  font-size: 20px;
+  color: #333;
+}
+.role-item p {
+  font-size: 15px;
+  color: #666;
+}
+.role-item img{
+	height: 200px;
+	width: 200px;	
+}
+
+/* Philosophy */
+.philosophy {
+  text-align: center;
+  font-size: 18px;
+  padding: 60px 20px;
+  background: #fafafa;
+  color: #444;
+  font-style: italic;
+}
+
+/* CTA */
+.cta {
+  text-align: center;
+  padding: 80px 20px;
+  background: #f4f8f6;
+}
+.cta h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+.cta button {
+  background: #a8d5ba;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #fff;
+  transition: background 0.2s;
+}
+.cta button:hover {
+  background: #95c6a8;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 30px;
+  font-size: 14px;
+  color: #999;
+  background: #fff;
+  border-top: 1px solid #eee;
+}

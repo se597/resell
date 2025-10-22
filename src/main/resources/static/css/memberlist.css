@@ -1,0 +1,133 @@
+/* ✅ 기본 설정 */
+body {
+  font-family: "Pretendard", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  color: #333;
+}
+
+/* ✅ 공통 컨테이너 */
+.page-content {
+  max-width: 1100px;
+  margin: 100px auto 60px;
+  padding: 30px 40px;
+  box-sizing: border-box;
+}
+
+/* ✅ 제목 */
+.page-content h2 {
+  text-align: center;
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 8px;
+  color: #333;
+}
+
+/* ✅ 상단 버튼 영역 */
+.page-content .btn-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+/* ✅ 버튼 스타일 */
+.page-content .btn-row button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #7b61ff;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.page-content .btn-row button:hover {
+  background-color: #5a42d1;
+  transform: translateY(-2px);
+}
+
+/* ✅ 테이블 스타일 */
+.page-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.page-content th,
+.page-content td {
+  border: 1px solid #ccc;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.page-content th {
+  background-color: #f8f8f8;
+  font-weight: 600;
+  color: #444;
+}
+
+.page-content tr:hover {
+  background-color: #fafafa;
+}
+
+/* ✅ 내부 select & form 스타일 */
+.page-content select {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  transition: 0.2s;
+}
+
+.page-content select:focus {
+  outline: none;
+  border-color: #7b61ff;
+  box-shadow: 0 0 4px rgba(123, 97, 255, 0.3);
+}
+
+.page-content form button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #9a80ff;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.page-content form button:hover {
+  background-color: #7b61ff;
+}
+
+/* ✅ 반응형 */
+@media (max-width: 768px) {
+  .page-content {
+    padding: 20px;
+  }
+
+  .page-content table {
+    font-size: 13px;
+  }
+
+  .page-content th,
+  .page-content td {
+    padding: 8px;
+  }
+
+  .page-content .btn-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .page-content .btn-row button {
+    width: 100%;
+  }
+}

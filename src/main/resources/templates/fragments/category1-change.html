@@ -1,0 +1,7 @@
+<div th:fragment="category1Change" class="cat-container">
+    <div th:each="c2 : ${cat2}"
+         th:text="${c2.cat2_name}"
+         class="cat-item"
+         th:onclick="|loadCategory3('${c2.cat2_id}', this)|">
+    </div>
+</div>

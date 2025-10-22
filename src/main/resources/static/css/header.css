@@ -1,0 +1,57 @@
+/* 상단바 전체 */
+.navbar {
+  display: flex;
+  justify-content: space-between; /* 왼쪽 / 가운데 / 오른쪽 */
+  align-items: center;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 12px 40px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* 왼쪽, 가운데, 오른쪽 공통 스타일 */
+.nav-left a,
+.nav-center a,
+.nav-right a {
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  margin: 0 10px;
+  transition: color 0.2s;
+}
+
+.nav-left a:hover,
+.nav-center a:hover,
+.nav-right a:hover {
+  color: #007bff;
+}
+
+/* 중앙 카테고리 영역 */
+.nav-center {
+  flex: 1;                    /* 가운데 확장 */
+  text-align: center;         /* 중앙 정렬 */
+  white-space: nowrap;        /* 줄바꿈 방지 */
+  overflow-x: auto;           /* 카테고리가 많을 때 스크롤 */
+}
+
+/* 로그인/로그아웃 오른쪽 정렬 */
+.nav-right {
+  text-align: right;
+}
+
+/* 반응형 약간 */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .nav-center {
+    order: 3;
+  }
+  .nav-right {
+    order: 2;
+  }
+}

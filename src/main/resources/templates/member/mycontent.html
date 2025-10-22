@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>내글 목록</title>
+<link rel="stylesheet" th:href="@{/css/mypage.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
+</head>
+<body>
+<div th:replace="layout/header :: siteHeader"></div>
+
+<div class="page-content">
+  <h2>내 글 목록</h2>
+
+  <div class="btn-row">
+    <button onclick="location.href='/'">홈으로</button>
+    <button th:onclick="|location.href='@{/mypage/{user_no}(user_no=${session.login.user_no})}'|">마이페이지</button>
+  </div>
+
+  <table>
+      <tr>
+          <th>번호</th>
+          <th>제목</th>
+          <th>작성일</th>
+          <th>조회수</th>
+      </tr>
+      <tr th:each="content : ${contentList}">
+          <td th:text="${content.pr_no}"></td>
+          <td th:text="${content.title}"></td>
+          <td th:text="${#dates.format(content.upload_at, 'yyyy-MM-dd')}"></td>
+          <td th:text="${content.viewcount}"></td>
+      </tr>
+  </table>
+</div>
+</body>
+</html>
