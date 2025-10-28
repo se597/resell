@@ -24,17 +24,9 @@ import com.example.pr3.dto.MemberDTO;
 @Controller
 public class MemberController {
 
-	@Autowired
-	ProductDAO dao;
-	
-	@Autowired
-	ContentDAO contentDAO;
-	
-    private final MemberDAO memberDAO;
-
-    public MemberController(MemberDAO memberDAO) {
-        this.memberDAO = memberDAO;
-    }
+	@Autowired ProductDAO dao;
+	@Autowired ContentDAO contentDAO;
+	@Autowired MemberDAO memberDAO;
 
     // 로그인 폼
     @GetMapping("/loginpage")
@@ -127,8 +119,15 @@ public class MemberController {
     // 회원정보 수정
     @PostMapping("/memberupdate")
     public String updateMember(@ModelAttribute MemberDTO member, HttpSession session) {
-        memberDAO.updateMember(member);
-        session.setAttribute("login", member);
+    	
+		/*
+		 * memberDAO.updateMember(member); 
+		 * session.setAttribute("login", member);
+		 */
+        
+    	MemberDTO updated = memberDAO.memberinfo(member.getUser_no());
+        session.setAttribute("login", updated);
+        
         return "redirect:/mypage/" + member.getUser_no();
     }
     

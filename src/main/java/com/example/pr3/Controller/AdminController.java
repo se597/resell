@@ -20,19 +20,14 @@ import com.example.pr3.dao.ContentDAO;
 @Controller
 public class AdminController {
 	
-	@Autowired
-	ContentDAO contentDAO;
-	
-	@Autowired
-	MemberDAO memberDAO;
-	
-	@Autowired
-	ProductDAO dao;
+	@Autowired ContentDAO contentDAO;
+	@Autowired MemberDAO memberDAO;
+	@Autowired ProductDAO dao;
 	
 	@PostMapping("/memberdelete")
     public String delete(@RequestParam("user_no") int user_no) {
         memberDAO.memberdelete(user_no);
-        return "redirect:/adminpage";
+        return "redirect:/mypage";
     }
 	
 	@GetMapping("/adminlist")

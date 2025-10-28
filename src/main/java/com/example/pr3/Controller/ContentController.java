@@ -35,22 +35,16 @@ public class ContentController {
 	
 	@Autowired ProductDAO productdao;
 	@Autowired MemberDAO memberdao;
+	@Autowired ContentDAO contentdao;
+	@Autowired CategoryDAO categorydao;
 	
 	private final String uploadDir = "uploads";
-    
-    private final ContentDAO contentDAO;
-    private final CategoryDAO categoryDAO;
-
-    public ContentController(ContentDAO contentDAO, CategoryDAO categoryDAO) {
-        this.contentDAO = contentDAO;
-        this.categoryDAO = categoryDAO;
-    }
     
 
     // 리스트 페이지
     @GetMapping("/list")
     public String list(Model model, HttpSession session) {
-        List<ContentDTO> contentList = contentDAO.selectAll();
+        List<ContentDTO> contentList = contentdao.selectAll();
         model.addAttribute("contentList", contentList);
         return "content/list"; // templates/content/list.html
     }
@@ -60,7 +54,7 @@ public class ContentController {
     public String form(Model model, HttpSession session, HttpServletRequest request) {
         Object login = session.getAttribute("login");
         if (login == null) {
-        	String referer = "http://localhost/content/form";      	System.out.println();
+        	String referer = "http://localhost/content/form";
         	request.getSession().setAttribute("redirectURL", referer);
         	model.addAttribute("error","글 작성은 로그인 후 이용해주세요.");
         	return "member/login";
@@ -68,9 +62,9 @@ public class ContentController {
 
         model.addAttribute("login", login);
         
-        List<Category1> cat1List = categoryDAO.selectCat1();
-        List<Category2> cat2List = categoryDAO.selectCat2();
-        List<Category3> cat3List = categoryDAO.selectCat3();
+        List<Category1> cat1List = categorydao.selectCat1();
+        List<Category2> cat2List = categorydao.selectCat2();
+        List<Category3> cat3List = categorydao.selectCat3();
         
         model.addAttribute("cat1List", cat1List);
         model.addAttribute("cat2List", cat2List);
@@ -87,7 +81,7 @@ public class ContentController {
                                 @RequestParam("upload3") MultipartFile upload3,
                                 ContentDTO dto) throws IOException {
 
-    	String uploadPath = new File("src/main/resources/static/upload/").getAbsolutePath() + "/";
+    	String uploadPath = new File("C:/upload").getAbsolutePath() + "/";
         if (!upload1.isEmpty()) {
             String filename1 = upload1.getOriginalFilename();
             upload1.transferTo(new File(uploadPath + filename1));
@@ -103,7 +97,7 @@ public class ContentController {
             upload3.transferTo(new File(uploadPath + filename3));
             dto.setFile3(filename3);
         }
-        contentDAO.insert(dto);
+        contentdao.insert(dto);
         return "redirect:/category";
     }
     
@@ -111,9 +105,9 @@ public class ContentController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") int id , Model model) {
     	ProductDTO item = productdao.detail(id);
-    	List<Category1> cat1List = categoryDAO.selectCat1();
-        List<Category2> cat2List = categoryDAO.selectCat2();
-        List<Category3> cat3List = categoryDAO.selectCat3();
+    	List<Category1> cat1List = categorydao.selectCat1();
+        List<Category2> cat2List = categorydao.selectCat2();
+        List<Category3> cat3List = categorydao.selectCat3();
         
         model.addAttribute("cat1List", cat1List);
         model.addAttribute("cat2List", cat2List);
@@ -125,7 +119,7 @@ public class ContentController {
     //업데이트
     @PostMapping("/update")
     public String update(ContentDTO dto) {
-    	String uploadPath = new File("src/main/resources/static/upload/").getAbsolutePath() + "/";
+    	String uploadPath = new File("C:/upload").getAbsolutePath() + "/";
     	
     	try {
     		if (dto.getUpload1() != null && !dto.getUpload1().isEmpty()) {
@@ -154,7 +148,7 @@ public class ContentController {
     	} catch (IOException e) {
     		e.printStackTrace();
     	}
-    	contentDAO.update(dto);
+    	contentdao.update(dto);
     	
     	return "redirect:/detail/" + dto.getPr_no();
     }
@@ -163,7 +157,7 @@ public class ContentController {
     @ResponseBody
     @PostMapping("/delete")
     public String delete(@RequestParam("cont_no") int cont_no) {
-        contentDAO.delete(cont_no);
+        contentdao.delete(cont_no);
         return "success";
     }
     
@@ -171,7 +165,7 @@ public class ContentController {
     @ResponseBody
     @PostMapping("/updatestate")
     public String updatestate(@RequestParam("cont_no") int no, @RequestParam("state") int state) {
-    	contentDAO.updateState(no, state);
+    	contentdao.updateState(no, state);
     	return "success";
     }
     
@@ -180,7 +174,7 @@ public class ContentController {
     @PostMapping("/report")
     public String report(ContentDTO dto) {
     	productdao.postcount(dto.getPr_no().intValue());
-    	contentDAO.report(dto);
+    	contentdao.report(dto);
     	return "success";
     }
     
@@ -188,7 +182,6 @@ public class ContentController {
     @ResponseBody
     @PostMapping("/api/category")
     public List<Category1> category1() {
-    	System.out.println("hello");
     	List<Category1> list = productdao.categories1();
     	return list;
     }
@@ -198,7 +191,6 @@ public class ContentController {
     @PostMapping("/api/category2")
     public List<Category2> category2(@RequestParam("cat1") int cat1) {
     	List<Category2> list = productdao.categories2(cat1);
-    	System.out.println(list);
     	return list;
     }
     
@@ -207,7 +199,6 @@ public class ContentController {
     @PostMapping("/api/category3")
     public List<Category3> category3(@RequestParam("cat2") int cat2) {
     	List<Category3> list = productdao.categories3(cat2);
-    	System.out.println(list);
     	return list;
     }
     

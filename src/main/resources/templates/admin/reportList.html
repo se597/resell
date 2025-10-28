@@ -29,7 +29,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr th:each="r : ${item}">
+      <tr th:each="r : ${item}"
+      		th:onclick="|location.href='@{/detail/{id}(id=${r.pr_no})}'|">
         <td th:text="${r.id}"></td>
         <td>
           <a th:href="@{/detail/{pr_no}(pr_no=${r.pr_no})}" th:text="${r.title}"></a>

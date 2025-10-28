@@ -14,7 +14,8 @@
 <div class="page-content">
     <h2>상품 등록</h2>
 
-    <form th:action="@{/content/add}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/content/add}" method="post" enctype="multipart/form-data"
+    	onsubmit="return validateForm()">
         
         <div class="form-line">
             <label>상품명</label>
@@ -148,6 +149,18 @@ function cat2_activate(){
 			});
 		})
 		.catch(err => console.error('카테고리 로드 실패', err));
+	}
+	
+	function validateForm() {
+	    const cat1 = document.getElementById('cat1').value;
+	    const cat2 = document.getElementById('cat2').value;
+	    const cat3 = document.getElementById('cat3').value;
+
+	    if (!cat1 || !cat2 || !cat3) {
+	        alert('모든 카테고리를 선택해야 등록할 수 있습니다.');
+	        return false; // 🚫 폼 제출 중단
+	    }
+	    return true; // ✅ 폼 제출 진행
 	}
 </script>
 </body>

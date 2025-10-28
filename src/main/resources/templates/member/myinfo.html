@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>회원정보</title>
@@ -47,7 +47,7 @@
             </tr>
             <tr>
                 <th>닉네임</th>
-                <td><input type="text" th:field="*{nickname}" /></td>
+                <td><input type="text" th:field="*{nickname}" readonly/></td>
             </tr>
         </tbody>
     </table>

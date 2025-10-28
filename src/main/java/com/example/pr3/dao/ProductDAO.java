@@ -63,9 +63,7 @@ public interface ProductDAO {
 	List<ProductDTO> product_cat3(int id); //카테고리별 상품 리스트
 	
 	ProductDTO detail(int id); //상세보기
-	ProductDTO api_detail(int id);
 	List<ProductDTO> list(); //전체 리스트
-	List<ProductDTO> api_list();
 	void viewcount(int id); //조회수 상승
 	void postcount(int id); //신고수 상승
 	List<ProductDTO> search(String key);

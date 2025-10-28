@@ -80,34 +80,8 @@
 		where pr_no = #{id}
 	</select>
 	
-	<select id="api_detail">
-		SELECT 
-    		p.pr_no, p.product_name, p.price, p.title, p.writer,
-    		p.upload_at, p.content, p.state, p.cat1_id, p.cat2_id,
-    		p.cat3_id, c1.cat1_name, c2.cat2_name, c3.cat3_name,
-    		p.viewcount, p.postcount, p.file1, p.file2, p.file3
-			FROM pr3 p
-			LEFT JOIN category1 c1 ON p.cat1_id = c1.cat1_id
-			LEFT JOIN category2 c2 ON p.cat2_id = c2.cat2_id
-			LEFT JOIN category3 c3 ON p.cat3_id = c3.cat3_id
-WHERE p.pr_no = #{id}
-		
-	</select>
-	
 	<select id="list">
 		select * from pr3
-	</select>
-	
-	<select id="api_list">
-		SELECT 
-    		p.pr_no, p.product_name, p.price, p.title, p.writer,
-    		p.upload_at, p.content, p.state, p.cat1_id, p.cat2_id,
-    		p.cat3_id, c1.cat1_name, c2.cat2_name,c3.cat3_name
-  		FROM pr3 p
-  		LEFT JOIN category1 c1 ON p.cat1_id = c1.cat1_id
-  		LEFT JOIN category2 c2 ON p.cat2_id = c2.cat2_id
-  		LEFT JOIN category3 c3 ON p.cat3_id = c3.cat3_id
-  		ORDER BY p.pr_no DESC
 	</select>
 	
 	<update id="viewcount">

@@ -18,13 +18,14 @@ public class APIcontroller {
 	@Autowired
 	ProductDAO dao;
 	
-	@GetMapping("/{id}")
+	@GetMapping("products/{id}")
 	public ProductDTO get(@PathVariable("id") int id) {
-		return dao.api_detail(id);
+		return dao.detail(id);
 	}
 	
-	@GetMapping("/list")
+	@GetMapping("productlist")
 	public List<ProductDTO> list() {
-		return dao.api_list();
+		System.out.println("들어옴");
+		return dao.list();
 	}
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>내글 목록</title>
@@ -24,7 +24,9 @@
           <th>작성일</th>
           <th>조회수</th>
       </tr>
-      <tr th:each="content : ${contentList}">
+      <tr th:each="content : ${contentList}"
+      		th:onclick="|location.href='@{/detail/{id}(id=${content.pr_no})}'|"
+      		style="cursor:pointer;">
           <td th:text="${content.pr_no}"></td>
           <td th:text="${content.title}"></td>
           <td th:text="${#dates.format(content.upload_at, 'yyyy-MM-dd')}"></td>

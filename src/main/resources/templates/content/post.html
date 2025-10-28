@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>상품 상세</title>
@@ -28,7 +28,8 @@
     <div class="meta-right">
     	<button type="button" onclick="openReport()">신고하기</button>
     </div>
-    <div th:if="${session.login != null and item.writer == session.login.id}">
+    <div th:if="${session.login != null and (item.writer == session.login.nickname
+    			or session.login.rank == 'admin')}">
     	<button onclick="openStateDialog()">상태변경</button>
     	<button type="button" th:onclick="|location.href='/content/edit/${item.pr_no}'|">수정</button>
     	<button onclick="dodelete()">삭제</button>
