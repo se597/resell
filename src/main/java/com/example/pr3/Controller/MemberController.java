@@ -120,11 +120,7 @@ public class MemberController {
     @PostMapping("/memberupdate")
     public String updateMember(@ModelAttribute MemberDTO member, HttpSession session) {
     	
-		/*
-		 * memberDAO.updateMember(member); 
-		 * session.setAttribute("login", member);
-		 */
-        
+		memberDAO.updateMember(member);         
     	MemberDTO updated = memberDAO.memberinfo(member.getUser_no());
         session.setAttribute("login", updated);
         

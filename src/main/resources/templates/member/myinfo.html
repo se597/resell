@@ -2,17 +2,71 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>회원정보</title>
+<title>회원정보수정</title>
 <link rel="stylesheet" th:href="@{/css/mypage.css}">
 <link rel="stylesheet" th:href="@{/css/header.css}">
-</head>
-<body>
 
+<!-- 🧩 카카오(다음) 주소 API -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+function findPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            document.getElementById('zipcode').value = data.zonecode;  // 우편번호
+            document.getElementById('address').value = data.address;    // 기본 주소
+            document.getElementById('address_detail').focus();          // 상세주소 포커스
+        }
+    }).open();
+}
+</script>
+
+<style>
+/* ✅ 간단한 레이아웃 (기존 mypage.css에 이미 있으면 생략 가능) */
+.page-content {
+  max-width: 800px;
+  margin: 100px auto;
+  padding: 30px 40px;
+  box-sizing: border-box;
+  font-family: "Pretendard", sans-serif;
+}
+
+/* ✅ 주소 입력 줄 */
+.address-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.address-row input#zipcode {
+  width: 160px;
+  flex-shrink: 0;
+}
+.address-row button.find-postcode {
+  padding: 6px 10px;
+  border: none;
+  background-color: #9a80ff;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.address-row button.find-postcode:hover {
+  background-color: #7b61ff;
+}
+input#address,
+input#address_detail {
+  width: 100%;
+  margin-top: 6px;
+}
+</style>
+</head>
+
+<body>
 <div th:replace="layout/header :: siteHeader"></div>
+
 <div class="page-content">
 <h2>회원정보수정</h2>
-<form th:action="@{/memberupdate}" method="post" th:object="${member}">
 
+<form th:action="@{/memberupdate}" method="post" th:object="${member}">
 	<input type="hidden" th:field="*{user_no}" />
 	
     <table>
@@ -33,26 +87,39 @@
         	<th>생년월일</th>
         	<td><input type="text" th:field="*{birth}" /></td>
         </tr>
-            <tr>
-                <th>주소</th>
-                <td><input type="text" th:field="*{address}" /></td>
-            </tr>
-            <tr>
-                <th>전화번호</th>
-                <td><input type="text" th:field="*{phone_number}" /></td>
-            </tr>
-            <tr>
-                <th>이메일</th>
-                <td><input type="text" th:field="*{email}" /></td>
-            </tr>
-            <tr>
-                <th>닉네임</th>
-                <td><input type="text" th:field="*{nickname}" readonly/></td>
-            </tr>
+
+        <!-- 🧩 주소 부분 수정 -->
+        <tr>
+            <th>주소</th>
+            <td>
+              <div class="address-row">
+                <input type="text" id="zipcode" name="zipcode" th:field="*{zipcode}" placeholder="우편번호" readonly>
+                <button type="button" class="find-postcode" onclick="findPostcode()">우편번호 찾기</button>
+              </div>
+              <input type="text" id="address" th:field="*{address}" placeholder="기본 주소">
+              <input type="text" id="address_detail" name="address_detail" th:field="*{address_detail}" placeholder="상세 주소 입력">
+            </td>
+        </tr>
+
+        <tr>
+            <th>전화번호</th>
+            <td><input type="text" th:field="*{phone_number}" /></td>
+        </tr>
+        <tr>
+            <th>이메일</th>
+            <td><input type="text" th:field="*{email}" /></td>
+        </tr>
+        <tr>
+            <th>닉네임</th>
+            <td><input type="text" th:field="*{nickname}" readonly/></td>
+        </tr>
         </tbody>
     </table>
-        <button type="submit">수정 완료</button>
-        <button type="button" onclick="history.back()">취소</button>
+
+    <div class="btn-row">
+      <button type="submit">수정 완료</button>
+      <button type="button" onclick="history.back()">취소</button>
+    </div>
 </form>
 </div>
 </body>

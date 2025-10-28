@@ -40,9 +40,9 @@ public interface MemberDAO {
     // 회원가입
     @Insert("""
             INSERT INTO pr3member 
-            (id, pw, name, address, birth, phone_number, email, nickname) 
+            (id, pw, name, zipcode, address, address_detail, birth, phone_number, email, nickname) 
             VALUES 
-            (#{id}, #{pw}, #{name}, #{address}, #{birth}, #{phone_number}, 
+            (#{id}, #{pw}, #{name}, #{zipcode}, #{address}, #{address_detail}, #{birth}, #{phone_number}, 
             #{email}, #{nickname})
         """)
     void join(MemberDTO dto);
@@ -56,7 +56,9 @@ public interface MemberDAO {
  		    UPDATE pr3member
  		    SET pw = #{pw},
  		        name = #{name},
+ 		        zipcode = #{zipcode},
  		        address = #{address},
+ 		        address_detail = #{address_detail},
  		        birth = #{birth},
  		        phone_number = #{phone_number},
  		        email = #{email},

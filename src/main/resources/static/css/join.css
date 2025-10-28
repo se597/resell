@@ -119,3 +119,34 @@ body {
     margin-top: 10px;
   }
 }
+
+/* ✅ 우편번호 입력행 */
+.page-content .address-row {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 우편번호 칸과 버튼 사이 간격 */
+}
+
+.page-content input#zipcode {
+  width: 160px; /* 우편번호 칸 좁게 */
+  flex-shrink: 0;
+}
+
+.page-content button.find-postcode {
+  background-color: #9a80ff;
+  padding: 8px 12px;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.page-content button.find-postcode:hover {
+  background-color: #7b61ff;
+}
+
+/* 주소 입력창은 전체 너비로 */
+.page-content input#address,
+.page-content input#address_detail {
+  width: 100%;
+  margin-top: 6px;
+}
+

@@ -12,7 +12,9 @@ public class MemberDTO {
     private String id;         // 아이디 (UNIQUE)
     private String pw;         // 비밀번호
     private String name;           // 이름
+    private String zipcode;
     private String address;        // 주소
+    private String address_detail;
     private String birth;          // 생년월일
     private String phone_number;   // 전화번호
     private String email;          // 이메일
