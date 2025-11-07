@@ -118,7 +118,9 @@ public class ContentController {
     
     //업데이트
     @PostMapping("/update")
-    public String update(ContentDTO dto) {
+    public String update(ContentDTO dto, @RequestParam(value = "deleteFile1", required = false) String delete1,
+    					@RequestParam(value = "deleteFile2", required = false) String delete2,
+    					@RequestParam(value = "deleteFile3", required = false) String delete3) {
     	String uploadPath = new File("C:/upload").getAbsolutePath() + "/";
     	
     	try {
@@ -127,7 +129,11 @@ public class ContentController {
         	    dto.getUpload1().transferTo(new File(uploadPath + filename1));
         	    dto.setFile1(filename1);
         	} else {
-        	    dto.setFile1(dto.getOldFile1()); // ✅ 유지
+        		if ("on".equals(delete1)) {
+        			dto.setFile1(null);
+        		} else {
+        			dto.setFile1(dto.getOldFile1()); // ✅ 유지
+        		}
         	}
     		
     		if (dto.getUpload2() != null && !dto.getUpload2().isEmpty()) {
@@ -135,7 +141,11 @@ public class ContentController {
         	    dto.getUpload2().transferTo(new File(uploadPath + filename2));
         	    dto.setFile2(filename2);
         	} else {
-        	    dto.setFile2(dto.getOldFile2()); // ✅ 유지
+        		if ("on".equals(delete2)) {
+        			dto.setFile2(null);
+        		} else {
+        			dto.setFile2(dto.getOldFile2()); // ✅ 유지
+        		}
         	}
     		
     		if (dto.getUpload3() != null && !dto.getUpload3().isEmpty()) {
@@ -143,7 +153,11 @@ public class ContentController {
         	    dto.getUpload3().transferTo(new File(uploadPath + filename3));
         	    dto.setFile3(filename3);
         	} else {
-        	    dto.setFile3(dto.getOldFile3()); // ✅ 유지
+        		if ("on".equals(delete3)) {
+        			dto.setFile3(null);
+        		} else {
+        			dto.setFile3(dto.getOldFile3()); // ✅ 유지
+        		}
         	}
     	} catch (IOException e) {
     		e.printStackTrace();

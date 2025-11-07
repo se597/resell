@@ -57,9 +57,9 @@ public interface ContentDAO {
     	        cat1_id = #{cat1_id},
     	        cat2_id = #{cat2_id},
     	        cat3_id = #{cat3_id},
-    	        file1 = #{file1},
-    	        file2 = #{file2},
-    	        file3 = #{file3}
+    	        file1 = #{file1, jdbcType=VARCHAR},
+    	        file2 = #{file2, jdbcType=VARCHAR},
+    	        file3 = #{file3, jdbcType=VARCHAR}
     	    WHERE pr_no = #{pr_no}
     	""")
     	void update(ContentDTO dto);

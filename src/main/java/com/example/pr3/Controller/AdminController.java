@@ -27,7 +27,7 @@ public class AdminController {
 	@PostMapping("/memberdelete")
     public String delete(@RequestParam("user_no") int user_no) {
         memberDAO.memberdelete(user_no);
-        return "redirect:/mypage";
+        return "redirect:/memberlist";
     }
 	
 	@GetMapping("/adminlist")

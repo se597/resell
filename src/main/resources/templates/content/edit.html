@@ -58,7 +58,7 @@
     		<span th:if="${item?.file1}">
 		        <small>
             		현재 파일:
-            		<a th:href="@{'/uploads/' + ${item.file1}}" th:text="${item.file1}" target="_blank"></a>
+            		<a th:href="@{'/upload/' + ${item.file1}}" th:text="${item.file1}" target="_blank"></a>
         		</small>
         		<label><input type="checkbox" name="deleteFile1"> 삭제</label>
     		</span>
@@ -72,7 +72,7 @@
     		<span th:if="${item?.file2}">
 		        <small>
             		현재 파일:
-            		<a th:href="@{'/uploads/' + ${item.file2}}" th:text="${item.file3}" target="_blank"></a>
+            		<a th:href="@{'/upload/' + ${item.file2}}" th:text="${item.file2}" target="_blank"></a>
         		</small>
         		<label><input type="checkbox" name="deleteFile2"> 삭제</label>
     		</span>
@@ -86,7 +86,7 @@
     		<span th:if="${item?.file3}">
 		        <small>
             		현재 파일:
-            		<a th:href="@{'/uploads/' + ${item.file3}}" th:text="${item.file3}" target="_blank"></a>
+            		<a th:href="@{'/upload/' + ${item.file3}}" th:text="${item.file3}" target="_blank"></a>
         		</small>
         		<label><input type="checkbox" name="deleteFile3"> 삭제</label>
     		</span>
